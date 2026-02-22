@@ -1,29 +1,152 @@
 {
   "expo": {
-    "name": "FE",
-    "slug": "FE",
+    "name": "REDATE 💕",
+    "slug": "redate-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "scheme": "redate",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FF3B69"
     },
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.redate.app",
+      "buildNumber": "1",
+      "supportsTablet": true,
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": ""
+        },
+        "googleServicesFile": "./GoogleService-Info.plist"
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow camera access for profile photos",
+        "NSPhotoLibraryUsageDescription": "Allow photo library access for profile photos",
+        "NSPhotoLibraryAddUsageDescription": "Allow saving photos to library",
+        "NSLocationWhenInUseUsageDescription": "REDATE needs your location to show nearby users",
+        "NSContactsUsageDescription": "Allow contact access for friend invitations",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "com.apple.developer.associated-domains": [
+          "applinks:redate.app"
+        ]
+      }
     },
     "android": {
+      "package": "com.redate.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FF3B69"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "ACCESS_WIFI_STATE",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_MEDIA_IMAGES",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "VIBRATE",
+        "READ_CONTACTS",
+        "RECEIVE_BOOT_COMPLETED"
+      ],
+      "config": {
+        "googleServices": {
+          "apiKey": "AIzaSyBZPBwbrnQW2Mpn2j5xaUmTUzVr10YINmk",
+          "appId": "1:467440387876:android:e1f89f229107fab72d55b1",
+          "projectId": "redateapp",
+          "storageBucket": "redateapp.firebasestorage.app",
+          "messagingSenderId": "467440387876",
+          "databaseURL": "https://redateapp-default-rtdb.europe-west1.firebasedatabase.app"
+        },
+        "googleSignIn": {
+          "certificateHash": ""
+        }
+      }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyBZPBwbrnQW2Mpn2j5xaUmTUzVr10YINmk",
+          "authDomain": "redateapp.firebaseapp.com",
+          "databaseURL": "https://redateapp-default-rtdb.europe-west1.firebasedatabase.app",
+          "projectId": "redateapp",
+          "storageBucket": "redateapp.firebasestorage.app",
+          "messagingSenderId": "467440387876",
+          "appId": "1:467440387876:web:e1f89f229107fab72d55b1",
+          "measurementId": "G-78YD6CXCXK"
+        }
+      },
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-firebase-app",
+        {
+          "config": {
+            "apiKey": "AIzaSyBZPBwbrnQW2Mpn2j5xaUmTUzVr10YINmk",
+            "authDomain": "redateapp.firebaseapp.com",
+            "databaseURL": "https://redateapp-default-rtdb.europe-west1.firebasedatabase.app",
+            "projectId": "redateapp",
+            "storageBucket": "redateapp.firebasestorage.app",
+            "messagingSenderId": "467440387876",
+            "appId": "1:467440387876:web:e1f89f229107fab72d55b1",
+            "measurementId": "G-78YD6CXCXK"
+          }
+        }
+      ],
+      [
+        "expo-firebase-auth",
+        {
+          "providers": [
+            "email",
+            "google"
+          ]
+        }
+      ],
+      [
+        "expo-firebase-database",
+        {
+          "databaseURL": "https://redateapp-default-rtdb.europe-west1.firebasedatabase.app"
+        }
+      ],
+      [
+        "expo-firebase-messaging",
+        {
+          "permissions": [
+            "INTERNET"
+          ]
+        }
+      ],
+      "expo-local-authentication"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "redateapp-eas"
+      },
+      "firebaseConfig": {
+        "apiKey": "AIzaSyBZPBwbrnQW2Mpn2j5xaUmTUzVr10YINmk",
+        "authDomain": "redateapp.firebaseapp.com",
+        "databaseURL": "https://redateapp-default-rtdb.europe-west1.firebasedatabase.app",
+        "projectId": "redateapp",
+        "storageBucket": "redateapp.firebasestorage.app",
+        "messagingSenderId": "467440387876",
+        "appId": "1:467440387876:web:e1f89f229107fab72d55b1",
+        "measurementId": "G-78YD6CXCXK"
+      }
     }
   }
 }
