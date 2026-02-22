@@ -1,0 +1,249 @@
+# ═══════════════════════════════════════════════════════════════
+# 🪟 REDATE - WINDOWS POWERSHELL COMMANDS (COPIAR & PEGAR)
+# ═══════════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════════
+# 1. VERIFICAR INSTALACIONES
+# ═══════════════════════════════════════════════════════════════
+
+node --version
+npm --version
+git --version
+psql --version
+docker --version
+
+# ═══════════════════════════════════════════════════════════════
+# 2. INSTALAR EXPO CLI
+# ═══════════════════════════════════════════════════════════════
+
+npm install -g expo-cli
+
+# ═══════════════════════════════════════════════════════════════
+# 3. INSTALAR DEPENDENCIAS BACKEND
+# ═══════════════════════════════════════════════════════════════
+
+cd C:\Users\TuUsuario\.openclaw\workspace\redate-app\BE
+npm install
+
+# ═══════════════════════════════════════════════════════════════
+# 4. CREAR DATABASE Y EJECUTAR SCHEMA (PostgreSQL local)
+# ═══════════════════════════════════════════════════════════════
+
+# Crear database:
+psql -U postgres -c "CREATE DATABASE redate_db;"
+
+# Ejecutar schema:
+cd C:\Users\TuUsuario\.openclaw\workspace\redate-app\BE
+psql -U postgres -d redate_db -f src\database\schema.sql
+
+# Verificar tablas creadas:
+psql -U postgres -d redate_db -c "\dt"
+
+# ═══════════════════════════════════════════════════════════════
+# 5. INICIAR BACKEND (TERMINAL 1)
+# ═══════════════════════════════════════════════════════════════
+
+cd C:\Users\TuUsuario\.openclaw\workspace\redate-app\BE
+npm run dev
+
+# ═══════════════════════════════════════════════════════════════
+# 6. INSTALAR DEPENDENCIAS FRONTEND (ABRIR NUEVA TERMINAL)
+# ═══════════════════════════════════════════════════════════════
+
+cd C:\Users\TuUsuario\.openclaw\workspace\redate-app\FE
+npm install react-native-deck-swiper
+
+# ═══════════════════════════════════════════════════════════════
+# 7. INICIAR EXPO (TERMINAL 2)
+# ═══════════════════════════════════════════════════════════════
+
+cd C:\Users\TuUsuario\.openclaw\workspace\redate-app\FE
+npm start
+
+# ═══════════════════════════════════════════════════════════════
+# 8. COMANDOS POSTGRESQL (UTILES PARA DEBUG)
+# ═══════════════════════════════════════════════════════════════
+
+# Listar todas las databases:
+psql -U postgres -c "\l"
+
+# Listar tablas en redate_db:
+psql -U postgres -d redate_db -c "\dt"
+
+# Ver estructura de tabla users:
+psql -U postgres -d redate_db -c "\d users"
+
+# Seleccionar todos los usuarios:
+psql -U postgres -d redate_db -c "SELECT * FROM users LIMIT 10;"
+
+# Borrar database (si quieres empezar de cero):
+psql -U postgres -c "DROP DATABASE redate_db;"
+psql -U postgres -c "CREATE DATABASE redate_db;"
+
+# ═══════════════════════════════════════════════════════════════
+# 9. COMANDOS REDIS (UTILES PARA DEBUG)
+# ═══════════════════════════════════════════════════════════════
+
+# Si Redis esta corriendo:
+redis-cli ping
+# Debería decir: PONG
+
+# Ver info del servidor:
+redis-cli info
+
+# Ver todas las keys:
+redis-cli KEYS "*"
+
+# Limpiar cache:
+redis-cli FLUSHALL
+
+# ═══════════════════════════════════════════════════════════════
+# 10. COMANDOS DOCKER (SI USAS DOCKER EN VEZ DE INSTALAR LOCAL)
+# ═══════════════════════════════════════════════════════════════
+
+# Iniciar PostgreSQL en Docker:
+docker run -d `
+  --name redate-postgres `
+  -e POSTGRES_PASSWORD=redate_password `
+  -e POSTGRES_DB=redate_db `
+  -p 5432:5432 `
+  postgres:15-alpine
+
+# Iniciar Redis en Docker:
+docker run -d `
+  --name redate-redis `
+  -p 6379:6379 `
+  redis:7-alpine
+
+# Ver containers corriendo:
+docker ps
+
+# Parar containers:
+docker stop redate-postgres redate-redis
+
+# Borrar containers:
+docker rm redate-postgres redate-redis
+
+# Ejecutar psql en container Docker:
+docker exec -it redate-postgres psql -U postgres -d redate_db -f /docker-entrypoint-initdb.d/schema.sql
+
+# ═══════════════════════════════════════════════════════════════
+# 11. COMANDOS TESTING API (CURL / POWERSHELL)
+# ═══════════════════════════════════════════════════════════════
+
+# Health check:
+Invoke-WebRequest -Uri "http://localhost:3000/health" | Select-Object -ExpandProperty Content
+
+# Register user (reemplazar con datos reales):
+$body = @{
+  email = "test@redate.app"
+  password = "password123"
+  name = "Test User"
+  firebase_token = "placeholder"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:3000/api/auth/register" `
+  -Method Post `
+  -Body $body `
+  -ContentType "application/json"
+
+# Login:
+$body = @{
+  email = "test@redate.app"
+  password = "password123"
+} | ConvertTo-Json
+
+$response = Invoke-RestMethod -Uri "http://localhost:3000/api/auth/login" `
+  -Method Post `
+  -Body $body `
+  -ContentType "application/json"
+
+$token = $response.token
+
+# Get users nearby:
+$headers = @{
+  Authorization = "Bearer $token"
+}
+
+Invoke-RestMethod -Uri "http://localhost:3000/api/users/nearby" `
+  -Method Get `
+  -Headers $headers
+
+# ═══════════════════════════════════════════════════════════════
+# 12. COMANDOS EXPO (FRONTEND)
+# ═══════════════════════════════════════════════════════════════
+
+# Iniciar Expo dev server:
+cd C:\Users\TuUsuario\.openclaw\workspace\redate-app\FE
+npm start
+
+# En Expo CLI teclas:
+# Presiona "w" → Abrir en navegador web
+# Presiona "a" → Abrir en Android (simulator)
+# Presiona "i" → Abrir en iOS (simulator - requires Mac)
+# Presiona "s" → Scan QR code
+
+# Abrir Expo DevTools:
+# En navegador: http://localhost:19002
+
+# ═══════════════════════════════════════════════════════════════
+# 13. COMANDOS NGROK (PARA WEBHOOKS STRIPE)
+# ═══════════════════════════════════════════════════════════════
+
+# Install ngrok:
+choco install ngrok
+
+# Iniciar ngrok (exponer localhost:3000):
+ngrok http 3000
+
+# Copiar HTTPS URL (ej: https://abc123.ngrok-free.app)
+# Usar en Stripe Dashboard → Webhooks → Add Endpoint
+
+# ═══════════════════════════════════════════════════════════════
+# 14. COMANDO VS CODE
+# ═══════════════════════════════════════════════════════════════
+
+# Abrir proyecto en VS Code:
+cd C:\Users\TuUsuario\.openclaw\workspace\redate-app
+code .
+
+# ═══════════════════════════════════════════════════════════════
+# NOTAS IMPORTANTES PARA WINDOWS
+# ═══════════════════════════════════════════════════════════════
+
+# 1. Paths en Windows usan backslash (\) no slash (/)
+#    - Correcto: C:\Users\Usuario\...
+#    - Incorrecto: C:/Users/Usuario/...
+
+# 2. Comandos en PowerShell:
+#    - Usar backticks (`) para multiline strings
+#    - Usar comillas dobles para variables con espacios
+
+# 3. Ejecutar como Administrator:
+#    - Right-click PowerShell → Run as Administrator
+#    - Necesario para Node.js, PostgreSQL, etc.
+
+# 4. Firewall Windows:
+#    - Permitir Node.js (puerto 3000)
+#    - Permitir Expo (puertos 19000-19006)
+#    - Permitir PostgreSQL (puerto 5432)
+
+# 5. PowerShell ExecutionPolicy:
+#    - Correr como Admin:
+#      Set-ExecutionPolicy RemoteSigned
+
+# ═══════════════════════════════════════════════════════════════
+# TUS COMANDOS PERSONALIZADOS (REEMPLAZA "TuUsuario" CON TU USERNAME)
+# ═══════════════════════════════════════════════════════════════
+
+# Tu username de Windows likely es TU nombre de usuario:
+# C:\Users\Eduardo\.openclaw\workspace\redate-app\BE
+# C:\Users\Eduardo\.openclaw\workspace\redate-app\FE
+
+# Copia y pega estos comandos después de ejecutar:
+# Get-Content env:USERNAME
+# Para saber tu username exacto
+
+# ═══════════════════════════════════════════════════════════════
+# FIN DE COMANDOS
+# ═══════════════════════════════════════════════════════════════
