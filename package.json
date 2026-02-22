@@ -1,0 +1,17 @@
+{
+  "name": "redate-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "install:fe": "cd FE && npm install",
+    "install:be": "cd BE && npm install",
+    "dev:fe": "cd FE && npx expo start",
+    "dev:be": "cd BE && npm run dev",
+    "build:ios": "cd FE && eas build --platform ios",
+    "build:android": "cd FE && eas build --platform android"
+  },
+  "workspaces": [
+    "FE",
+    "BE"
+  ]
+}
