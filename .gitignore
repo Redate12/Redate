@@ -1,0 +1,99 @@
+# REDATE Dating App - Git Ignore
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+
+# Firebase service account key (HIGHLY SENSITIVE - NEVER COMMIT)
+firebase-service-key.json
+firebase-adminsdk-*.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.history/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Expo
+.expo/
+.expo-shared/
+web-build/
+
+# iOS
+ios/Pods/
+ios/*.xcworkspace
+ios/*.xcuserdata/
+ios/DerivedData/
+ios/ios/Pods/
+
+# Android
+android/app/build/
+android/.gradle/
+android/local.properties
+android/.idea/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Database backups
+*.sql.backup
+*.dump
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+
+# Stripe
+stripe_*.log
+stripe_logs/
+
+# Documentation drafts
+DRAFT_*
+NOTES_*
+TODO_*
+
+# Archive
+*.zip
+*.tar
+*.tar.gz
+*.rar
+.7z
